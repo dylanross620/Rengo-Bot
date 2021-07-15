@@ -5,7 +5,8 @@ Discord bot to play Rengo on the OGS server
 Below is a list of currently supported commands. All commands are run by prefixing their name with an exclamation point (!). Commands prefixed by an asterisk (\*) are admin-only.
 * **rengo <player ...>**: Challenge the mentioned players to a game of rengo. The first half of the players will make up your team and play black, while the second half will play as white.
 * **play <move>**: Play a given move. Valid moves are **pass**, **resign**, or a coordinate that matches the labeling provided by the OGS web UI.
-* **\*rengo_shutdown**: Disconnect from the API and shutdown the bot.
+* **\*rengo_shutdown**: Disconnect from the API, end any running games, and shutdown the bot. **Make sure to use this method to shut down the bot**.
+* **\*cancel_game <game_id>**: Cancel the game with the specified id, making black resign so the game is also complete in the OGS servers
 
 ## Setup
 ### Python Setup

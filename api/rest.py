@@ -1,4 +1,5 @@
 from typing import Tuple, Union
+from sys import stderr
 
 import requests
 
@@ -98,6 +99,7 @@ def challenge_player(access_token: str, player_id: int, game_name: str, handicap
     resp = requests.post(url=url, json=data, headers=headers)
 
     if resp.status_code != 200:
+        print(f"Error creating challenge: {resp.status_code} {resp.text}", file=stderr)
         return None
     
     resp_data = resp.json()

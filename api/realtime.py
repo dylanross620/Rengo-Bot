@@ -62,7 +62,7 @@ def make_move(game_id: int, player_id: int, move: str) -> bool:
 # Returns True if the resignation was successful
 def resign(game_id: int, player_id: int) -> bool:
     try:
-        sio.emit('game/resign', {'game_id': game_id, 'player_id': player_id})
+        sio.call('game/resign', {'game_id': game_id, 'player_id': player_id}, timeout=5)
     except Exception as e:
         # There was an error connecting to the api
         print(e)

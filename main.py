@@ -126,9 +126,33 @@ async def shutdown(ctx):
     await ctx.send('Shutting down')
     await ctx.bot.close()
 
+    # Have black resign all of the ongoing games to clean up games since they can't be renewed
+    for game in game_stats.keys():
+        game_manager.resign(game, 'black')
+
     game_manager.disconnect()
 
     print('Discord bot shutdown')
+
+@bot.command(name='cancel_game')
+async def cancel_game(ctx, game_id: int):
+    if not is_admin(ctx.author.roles):
+        return
+
+    if game_id not in game_stats:
+        await ctx.send(f"Invalid game {game_id}")
+        return
+
+    game = game_stats.pop(game_id)
+
+    # Remove the players from the game and remove game stats
+    for p in game['players'][0]:
+        names_to_games.pop(p, None)
+    for p in game['players'][1]:
+        names_to_games.pop(p, None)
+
+    # Make black resign the game to clean it up
+    game_manager.resign(game_id, 'black')
 
 @bot.command(name='rengo')
 async def start_challenge(ctx, *args):
